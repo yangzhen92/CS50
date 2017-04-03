@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    history
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {%for inf in info%} 
+                    <tr>
+                        <td>{{ inf["symbol"] }}</td>
+                        <td>{{ lookup(inf["symbol"])["name"] }}</td>
+                        <td>{{ inf["share"] }}</td>
+                        <td>{{ inf["price"] }}</td>
+                        <td>{{ inf["time"] }}</td>
+                    </tr>
+                {%endfor%}    
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

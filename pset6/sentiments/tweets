@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import sys
+import helpers
+from analyzer import Analyzer
+import os
+from termcolor import colored
+
+positives = os.path.join(sys.path[0], "positive-words.txt")
+negatives = os.path.join(sys.path[0], "negative-words.txt")
+
+"""初始化positive/negetive/neutual分数"""
+p = 0
+n = 0
+ne = 0
+
+#if len(sys.argv) != 2:
+#    sys.exit("Usage: ./tweets @user")
+#if helpers.get_user_timeline(sys.argv[1].lstrip('@'),50) == None:
+#    sys.exit("get user timeline failed")
+a = Analyzer(positives, negatives)                                   #创建分析器实例
+for text in helpers.get_user_timeline(sys.argv[1].lstrip('@'),50):   #由twython文档得知函数返回推特list，每条推以str形式存储作为list的元素
+    a.analyze(text)                                                  #把推特传给分析器
+    if a.score > 0:
+        p += 1
+        print(a.score,colored(text, "green"))
+    elif a.score < 0:
+        n += 1
+        print(a.score,colored(text, "red"))
+    else:
+        ne += 1
+        print(a.score,colored(text, "yellow"))

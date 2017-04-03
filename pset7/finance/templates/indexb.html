@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    indexb
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4">ASSETS</td>
+                <th>{{total}}</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                {%for inf in info%} 
+                    <tr>
+                        <td>{{ inf["symbol"] }}</td>
+                        <td>{{ lookup(inf["symbol"])["name"] }}</td>
+                        <td>{{ inf["SUM(share)"] }}</td>
+                        <td>{{ lookup(inf["symbol"])["price"] }}</td>
+                        <td>{{ lookup(inf["symbol"])["price"]*inf["SUM(share)"] }}</td>
+                    </tr>
+                {%endfor%}    
+            </tr>
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{newcash}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
